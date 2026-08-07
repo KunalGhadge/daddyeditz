@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  motion, useInView, useScroll, useTransform,
+  motion, useInView,
   AnimatePresence
 } from 'framer-motion';
 import {
   Clock, Menu, X, ArrowRight, Play, MapPin,
-  Mail, Phone, ChevronDown, Zap, Award, Film,
+  Mail, Phone, Zap, Film,
   CheckCircle, Sparkles, Smartphone, PlayCircle, MonitorPlay
 } from 'lucide-react';
 import { Shader, ChromaFlow, FilmGrain, FlutedGlass, Swirl } from 'shaders/react';
