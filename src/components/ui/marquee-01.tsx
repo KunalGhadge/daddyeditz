@@ -11,7 +11,7 @@ const reviews = [
   {
     name: "Aditya Shinde",
     username: "@adityafit",
-    body: ""The gym reel he made for us went insane — 2M+ views organically. People still ask us about that edit. Absolute legend."",
+    body: "The gym reel he made for us went insane — 2M+ views organically. People still ask us about that edit. Absolute legend.",
     profile: "https://i.pravatar.cc/150?img=12",
   },
   {
