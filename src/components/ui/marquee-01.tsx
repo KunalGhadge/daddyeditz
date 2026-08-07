@@ -17,31 +17,31 @@ const reviews = [
   {
     name: "Priya Kadam",
     username: "@priyasalon",
-    body: ""We were completely offline before. He packaged our salon transformation videos so well that clients started DMing us just to book."",
+    body: "We were completely offline before. He packaged our salon transformation videos so well that clients started DMing us just to book.",
     profile: "https://i.pravatar.cc/150?img=32",
   },
   {
     name: "Nikhil Rao",
     username: "@nikhilbiz",
-    body: ""Super professional, fast turnarounds and genuinely understands what hooks work. Best investment I made for my brand's social presence."",
+    body: "Super professional, fast turnarounds and genuinely understands what hooks work. Best investment I made for my brand's social presence.",
     profile: "https://i.pravatar.cc/150?img=60",
   },
   {
     name: "Sneha Patil",
     username: "@snehacreates",
-    body: ""I gave him my raw podcast clips and he returned gold. The captions, the cuts, the music — everything was just right. 10/10 recommend."",
+    body: "I gave him my raw podcast clips and he returned gold. The captions, the cuts, the music — everything was just right. 10/10 recommend.",
     profile: "https://i.pravatar.cc/150?img=44",
   },
   {
     name: "Rohan Desai",
     username: "@rohandesai",
-    body: ""My product showcase reel hit 1.5M views and we sold out stock in 3 days. SharonRaj knows exactly how to make content that sells."",
+    body: "My product showcase reel hit 1.5M views and we sold out stock in 3 days. SharonRaj knows exactly how to make content that sells.",
     profile: "https://i.pravatar.cc/150?img=8",
   },
   {
     name: "Kavya Joshi",
     username: "@kavyaj",
-    body: ""The reels he made for my coaching business brought in 15 new enrolments from Instagram alone. The ROI speaks for itself."",
+    body: "The reels he made for my coaching business brought in 15 new enrolments from Instagram alone. The ROI speaks for itself.",
     profile: "https://i.pravatar.cc/150?img=29",
   },
 ];
