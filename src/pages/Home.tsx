@@ -244,7 +244,7 @@ const portfolioItems = [
     title: "Product Marketing",
     client: "E-commerce Brand",
     metrics: "3x Sales Boost",
-    video: "/assets/v11.mp4",
+    video: "/assets/v44.mp4",
     color: "from-orange-500/20",
     link: "/services/product-marketing",
   }
@@ -260,6 +260,7 @@ const process = [
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function Home() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [shaderFailed, setShaderFailed] = useState(false);
   const handleShaderUnavailable = useCallback((_r: string) => setShaderFailed(true), []);
@@ -552,36 +553,50 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {/* Large Hero Item */}
-            <FadeIn delay={0.1} className="md:col-span-2 md:row-span-2">
-              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
+            <FadeIn delay={0.1} className="md:col-span-2 md:row-span-2 h-full">
+              <div 
+                onClick={() => setSelectedImage('/assets/haldi-function-poster.jpeg')}
+                className="relative h-full rounded-3xl overflow-hidden aspect-[4/3] group cursor-pointer shadow-sm hover:shadow-[0_0_40px_rgba(255,92,40,0.3)] hover:border-[#FF5C28]/50 transition-all duration-500 bg-stone-100 border border-black/5"
+              >
                 <img src="/assets/haldi-function-poster.jpeg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Haldi Function Poster" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    <div className="bg-white/20 backdrop-blur-md rounded-full p-4 border border-white/30 text-white shadow-xl">
+                        <Sparkles size={24} />
+                    </div>
+                </div>
                 <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <span className="text-[#FF5C28] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Event Poster</span>
+                  <span className="text-[#FF5C28] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full mb-2 inline-block">Event Poster</span>
                   <div className="text-white font-display text-2xl lg:text-3xl">Haldi Function Poster</div>
                 </div>
               </div>
             </FadeIn>
             
             {/* Small Item 1 */}
-            <FadeIn delay={0.2}>
-              <div className="relative rounded-3xl overflow-hidden aspect-square group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
+            <FadeIn delay={0.2} className="h-full">
+              <div 
+                onClick={() => setSelectedImage('/assets/baby-birthday-poster.jpeg')}
+                className="relative h-full rounded-3xl overflow-hidden aspect-square md:aspect-auto group cursor-pointer shadow-sm hover:shadow-[0_0_40px_rgba(168,85,247,0.3)] hover:border-[#a855f7]/50 transition-all duration-500 bg-stone-100 border border-black/5"
+              >
                 <img src="/assets/baby-birthday-poster.jpeg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Baby Birthday Poster" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <span className="text-[#a855f7] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Celebration</span>
+                  <span className="text-[#a855f7] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full mb-2 inline-block">Celebration</span>
                   <div className="text-white font-display text-xl">Baby Birthday Poster</div>
                 </div>
               </div>
             </FadeIn>
 
             {/* Small Item 2 */}
-            <FadeIn delay={0.3}>
-              <div className="relative rounded-3xl overflow-hidden aspect-square group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
+            <FadeIn delay={0.3} className="h-full">
+              <div 
+                onClick={() => setSelectedImage('/assets/JCB-service-visiting-card.jpeg')}
+                className="relative h-full rounded-3xl overflow-hidden aspect-square md:aspect-auto group cursor-pointer shadow-sm hover:shadow-[0_0_40px_rgba(34,211,238,0.3)] hover:border-[#22d3ee]/50 transition-all duration-500 bg-stone-100 border border-black/5"
+              >
                 <img src="/assets/JCB-service-visiting-card.jpeg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="JCB Service Visiting Card" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <span className="text-[#22d3ee] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Identity</span>
+                  <span className="text-[#22d3ee] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full mb-2 inline-block">Identity</span>
                   <div className="text-white font-display text-xl">JCB Visiting Card</div>
                 </div>
               </div>
@@ -589,11 +604,14 @@ export default function Home() {
             
             {/* Wide Item 3 */}
             <FadeIn delay={0.4} className="md:col-span-3">
-              <div className="relative rounded-3xl overflow-hidden aspect-[21/9] md:aspect-[3/1] group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
+              <div 
+                onClick={() => setSelectedImage('/assets/property-pooja-poster.jpeg')}
+                className="relative rounded-3xl overflow-hidden aspect-[21/9] md:aspect-[3/1] group cursor-pointer shadow-sm hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] hover:border-emerald-500/50 transition-all duration-500 bg-stone-100 border border-black/5"
+              >
                 <img src="/assets/property-pooja-poster.jpeg" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" alt="Property Pooja Poster" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <span className="text-emerald-500 font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Real Estate</span>
+                  <span className="text-emerald-500 font-ui text-[12px] font-bold uppercase tracking-wider bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full mb-2 inline-block">Real Estate</span>
                   <div className="text-white font-display text-2xl lg:text-3xl">Property Pooja Poster</div>
                 </div>
               </div>
@@ -900,6 +918,40 @@ export default function Home() {
         </svg>
         <div className="absolute inset-0 rounded-full border-2 border-white/40 scale-110 opacity-0 group-hover:animate-ping" />
       </a>
+    
+      {/* ── IMAGE LIGHTBOX ── */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[300] flex items-center justify-center bg-black/90 backdrop-blur-md p-4 sm:p-8 cursor-zoom-out"
+            onClick={() => setSelectedImage(null)}
+          >
+            <div className="absolute top-6 right-6 z-[310]">
+              <button 
+                onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
+                className="w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white transition-all hover:scale-110"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            <motion.img 
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              src={selectedImage} 
+              alt="Fullscreen view" 
+              className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 }
