@@ -2,15 +2,16 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
   motion, useInView,
-  AnimatePresence
+  AnimatePresence, useScroll, useTransform
 } from 'framer-motion';
 import {
-  Clock, Menu, X, ArrowRight, Play, MapPin,
+  Clock, Menu, X, ArrowRight, MapPin,
   Mail, Phone, Zap, Film,
   CheckCircle, Sparkles, Smartphone, PlayCircle, MonitorPlay
 } from 'lucide-react';
 import { Shader, ChromaFlow, FilmGrain, FlutedGlass, Swirl } from 'shaders/react';
 import TestimonialMarqueeDemo from '@/components/ui/marquee-01';
+import { PremiumVideoPlayer } from '@/components/ui/PremiumVideoPlayer';
 
 // ─── Live Clock ──────────────────────────────────────────────────────────────
 function LiveClock() {
@@ -65,23 +66,23 @@ function TextRollBtn({
 }
 
 // ─── FadeIn ───────────────────────────────────────────────────────────────────
-function FadeIn({ children, delay = 0, className = '', direction = 'up' }: {
+function FadeIn({ children, delay = 0, className = '', direction = 'up', style }: {
   children: React.ReactNode; delay?: number; className?: string;
   direction?: 'up' | 'left' | 'right' | 'none';
+  style?: React.CSSProperties;
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
-  const initial = {
-    opacity: 0,
-    y: direction === 'up' ? 36 : 0,
-    x: direction === 'left' ? -36 : direction === 'right' ? 36 : 0,
-    filter: 'blur(6px)',
-  };
+  const dir = direction;
   return (
-    <motion.div ref={ref} initial={initial}
-      animate={inView ? { opacity: 1, y: 0, x: 0, filter: 'blur(0px)' } : initial}
-      transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: dir === 'up' ? 24 : 0, x: dir === 'left' ? -24 : dir === 'right' ? 24 : 0 }}
+      animate={inView ? { opacity: 1, y: 0, x: 0 } : {}}
+      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+      className={className}
+      style={style}
+    >
       {children}
     </motion.div>
   );
@@ -221,7 +222,7 @@ const portfolioItems = [
     title: "Event Branding",
     client: "Navi Mumbai Festival",
     metrics: "+40% Engagement",
-    video: "https://cdn.pixabay.com/video/2021/08/04/83863-584742563_large.mp4",
+    video: "/assets/v1.mp4",
     poster: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=600&auto=format&fit=crop",
     color: "from-blue-500/20",
     link: "/services/event-branding",
@@ -231,7 +232,7 @@ const portfolioItems = [
     title: "Logo Design",
     client: "Tech Startup",
     metrics: "Brand Identity",
-    video: "https://cdn.pixabay.com/video/2015/08/08/212-135738872_large.mp4",
+    video: "/assets/v1.mp4",
     poster: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop",
     color: "from-purple-500/20",
     link: "/services/logo-design-navi-mumbai",
@@ -241,7 +242,7 @@ const portfolioItems = [
     title: "Social Media Posts",
     client: "Fitness Coach",
     metrics: "1M+ Impressions",
-    video: "https://cdn.pixabay.com/video/2020/05/11/38600-418704289_large.mp4",
+    video: "/assets/v1.mp4",
     poster: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop",
     color: "from-emerald-500/20",
     link: "/services/social-media-kamothe",
@@ -251,7 +252,7 @@ const portfolioItems = [
     title: "Product Marketing",
     client: "E-commerce Brand",
     metrics: "3x Sales Boost",
-    video: "https://cdn.pixabay.com/video/2021/02/13/65137-513689409_large.mp4",
+    video: "/assets/v1.mp4",
     poster: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop",
     color: "from-orange-500/20",
     link: "/services/product-marketing",
@@ -272,6 +273,19 @@ export default function Home() {
   const [shaderFailed, setShaderFailed] = useState(false);
   const handleShaderUnavailable = useCallback((_r: string) => setShaderFailed(true), []);
   const navLinks = ['Work', 'Services', 'Timeline', 'About', 'Contact'];
+
+  const timelineRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: timelineScroll } = useScroll({
+    target: timelineRef,
+    offset: ["start center", "end center"]
+  });
+  const timelineScale = useTransform(timelineScroll, [0, 1], [0, 1]);
+
+  const workRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: workScroll } = useScroll({
+    target: workRef,
+  });
+  const workX = useTransform(workScroll, [0, 1], ["0%", "-75%"]);
 
   const theme = {
     bg: '#F7F6F3', bgAlt: '#FFFFFF', bgCard: 'rgba(255,255,255,0.7)',
@@ -295,7 +309,7 @@ export default function Home() {
           {/* Logo */}
           <a href="#" className="flex items-center gap-3.5 shrink-0 group">
             <div className="w-10 h-10 bg-[#FF5C28] rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shadow-md shadow-[#FF5C28]/30">
-              <span className="text-white text-[12px] font-bold font-ui">SV</span>
+              <span className="text-white text-[12px] font-bold font-ui">SG</span>
             </div>
             <div>
               <div className="text-[15px] font-bold tracking-tight" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Sid Graphics</div>
@@ -314,10 +328,11 @@ export default function Home() {
 
           {/* Right cluster */}
           <div className="flex items-center gap-3 shrink-0">
-            <div className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-full bg-white/60">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="font-ui text-[12px] font-bold text-stone-600">Available</span>
-            </div>
+            <a href="https://instagram.com/sid._.graphics" target="_blank" rel="noreferrer" 
+               className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300"
+               style={{ background: 'rgba(255,92,40,0.1)', borderColor: 'rgba(255,92,40,0.3)', color: '#FF5C28' }}>
+               <span className="font-ui text-[13px] font-bold">Instagram</span>
+            </a>
             <LiveClock />
             <button onClick={() => setMenuOpen(true)}
               className="md:hidden w-10 h-10 rounded-full flex items-center justify-center hover:bg-black/5 border border-black/6 bg-white/60">
@@ -455,104 +470,164 @@ export default function Home() {
       <TextMarquee />
 
       {/* ── 9:16 SHORT FORM WORK ───────────────────────────────────────────── */}
-      <section id="work" className="py-20 sm:py-24 lg:py-36 relative bg-white">
+      <section id="work" ref={workRef} className="relative bg-[#111] h-[300vh]">
+        <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+          <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 w-full mb-8 sm:mb-12">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+              <div>
+                <FadeIn>
+                  <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-4 sm:mb-6 font-ui text-[11px] sm:text-[12px] font-bold tracking-widest uppercase bg-white/10 border border-white/20 text-white">
+                    <Sparkles size={11} />
+                    My Edits
+                  </div>
+                </FadeIn>
+                <FadeIn delay={0.1}>
+                  <h2 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] tracking-[-0.03em] max-w-lg text-white">
+                    Engineered for <span className="italic" style={{ background: 'linear-gradient(135deg,#FF5C28,#ff9a6c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>retention.</span>
+                  </h2>
+                </FadeIn>
+              </div>
+              <FadeIn delay={0.2}>
+                <p className="font-body text-[15px] sm:text-[16px] leading-[1.75] max-w-sm text-stone-400 font-medium">
+                  Vertical content requires a completely different pacing. Scroll down to browse horizontally.
+                </p>
+              </FadeIn>
+            </div>
+          </div>
+
+          <motion.div style={{ x: workX }} className="flex gap-5 sm:gap-6 px-4 sm:px-8 lg:px-12 w-[300vw] sm:w-[200vw] lg:w-[130vw]">
+            {portfolioItems.map((item) => (
+              <div key={item.id} className="group cursor-pointer flex flex-col h-[50vh] sm:h-[60vh] w-[70vw] sm:w-[35vw] lg:w-[25vw] shrink-0 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.8)] transition-shadow duration-500">
+                <PremiumVideoPlayer 
+                  src={item.video} 
+                  poster={item.poster}
+                  className="relative w-full h-full bg-stone-900"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none" />
+
+                  {/* Type badge */}
+                  <div className="absolute top-4 left-4 pointer-events-auto">
+                    <span className="text-white text-[11px] font-bold font-ui px-2.5 py-1.5 rounded-lg"
+                      style={{ background: 'rgba(255,92,40,0.9)', backdropFilter: 'blur(4px)', boxShadow: '0 4px 12px rgba(255,92,40,0.3)' }}>
+                      {item.metrics}
+                    </span>
+                  </div>
+
+                  {/* Reaction button — top right */}
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-auto">
+                    <ReactionButton />
+                  </div>
+
+                  {/* Title & views */}
+                  <div className="absolute bottom-5 left-5 right-5 pointer-events-none">
+                    <div className="font-display text-[1.4rem] sm:text-[1.8rem] text-white font-medium mb-2 leading-tight">{item.title}</div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 font-ui text-[13px] font-bold text-white/80">
+                        <Film size={15} className="text-[#FF5C28]" />
+                        {item.client}
+                      </div>
+                      <div className="pointer-events-auto">
+                        <ReactionButton />
+                      </div>
+                    </div>
+                  </div>
+                </PremiumVideoPlayer>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+      {/* ── STATIC DESIGNS (POSTERS/LOGOS) ─────────────────────────────────── */}
+      <section className="py-20 sm:py-24 lg:py-36 relative bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 sm:mb-16 lg:mb-20">
             <div>
-              <FadeIn><SectionBadge label="My Edits" /></FadeIn>
+              <FadeIn><SectionBadge label="Brand & Print" /></FadeIn>
               <FadeIn delay={0.1}>
                 <h2 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] tracking-[-0.03em] max-w-lg text-[#111]">
-                  Engineered for <span className="italic" style={{ background: 'linear-gradient(135deg,#FF5C28,#ff9a6c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>retention.</span>
+                  Visual identities that <span className="italic" style={{ background: 'linear-gradient(135deg,#FF5C28,#ff9a6c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>last.</span>
                 </h2>
               </FadeIn>
             </div>
             <FadeIn delay={0.2}>
               <p className="font-body text-[15px] sm:text-[16px] leading-[1.75] max-w-sm text-stone-500 font-medium">
-                Vertical content requires a completely different pacing. Here are some of my best performing short-form edits.
+                From striking event posters to minimal logos. Clean, precise, and memorable.
               </p>
             </FadeIn>
           </div>
 
-          {/* 9:16 Grid with Reaction Buttons */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-            {portfolioItems.map((item, i) => (
-              <FadeIn key={item.id} delay={i * 0.1}>
-                <div className="group cursor-pointer flex flex-col h-full rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] transition-shadow duration-500">
-                  <div className="relative w-full aspect-[9/16] bg-stone-100">
-                    <video src={item.video} autoPlay muted loop playsInline
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-
-                    {/* Type badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="text-white text-[11px] font-bold font-ui px-2.5 py-1.5 rounded-lg"
-                        style={{ background: 'rgba(255,92,40,0.9)', backdropFilter: 'blur(4px)', boxShadow: '0 4px 12px rgba(255,92,40,0.3)' }}>
-                        {item.metrics}
-                      </span>
-                    </div>
-
-                    {/* Reaction button — top right */}
-                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <ReactionButton />
-                    </div>
-
-                    {/* Play icon on hover */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/40">
-                        <Play size={20} className="text-white ml-1" />
-                      </div>
-                    </div>
-
-                    {/* Title & views */}
-                    <div className="absolute bottom-5 left-5 right-5">
-                      <div className="font-display text-[18px] text-white font-medium mb-1.5 leading-tight">{item.title}</div>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5 font-ui text-[12px] font-bold text-white/80">
-                          <Film size={14} className="text-[#FF5C28]" />
-                          {item.client}
-                        </div>
-                        {/* Always-visible reaction button at the bottom */}
-                        <ReactionButton />
-                      </div>
-                    </div>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {/* Large Hero Item */}
+            <FadeIn delay={0.1} className="md:col-span-2 md:row-span-2">
+              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
+                <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1200&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Brand Identity" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-[#FF5C28] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Brand Identity</span>
+                  <div className="text-white font-display text-2xl">Modern Tech Logo</div>
                 </div>
-              </FadeIn>
-            ))}
+              </div>
+            </FadeIn>
+            
+            {/* Small Item 1 */}
+            <FadeIn delay={0.2}>
+              <div className="relative rounded-3xl overflow-hidden aspect-square group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=600&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Poster" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-[#a855f7] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Event Poster</span>
+                  <div className="text-white font-display text-xl">Navi Mumbai Fest</div>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Small Item 2 */}
+            <FadeIn delay={0.3}>
+              <div className="relative rounded-3xl overflow-hidden aspect-square group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
+                <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Social Media" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-[#22d3ee] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Social Media</span>
+                  <div className="text-white font-display text-xl">Fitness Campaign</div>
+                </div>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>
 
       {/* ── SERVICES ──────────────────────────────────────────────────────── */}
-      <section id="services" className="py-20 sm:py-24 lg:py-36 relative bg-[#F7F6F3]">
+      <section id="services" className="py-20 sm:py-24 lg:py-36 relative bg-[#fdfbf7]">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none bg-[#FF5C28]/5 blur-[150px]" />
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
+        <div className="max-w-[1000px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
           <FadeIn><SectionBadge label="What I do" /></FadeIn>
           <div className="flex flex-col lg:flex-row lg:items-end gap-6 lg:gap-20 mb-12 sm:mb-16 lg:mb-20">
             <FadeIn delay={0.1} className="flex-1">
               <h2 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] tracking-[-0.03em] text-[#111]">
-                Video editing that <span className="italic text-stone-400">gets views.</span>
+                Designs that <span className="italic text-stone-400">demand attention.</span>
               </h2>
             </FadeIn>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+          <div className="flex flex-col gap-6 relative">
             {services.map((s, i) => (
-              <FadeIn key={s.tag} delay={i * 0.1}>
-                <div className="relative rounded-3xl p-8 sm:p-10 h-full flex flex-col overflow-hidden group transition-all duration-500 bg-white border border-black/[0.04] shadow-[0_4px_24px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)]">
-                  <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: `${s.accent}15` }} />
-                  <div className="relative z-10">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 shadow-sm"
+              <FadeIn key={s.tag} delay={0.1} className="sticky" style={{ top: `calc(10vh + ${i * 40}px)` }}>
+                <div className="relative rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row gap-10 overflow-hidden group transition-all duration-500 bg-white border border-black/[0.04] shadow-[0_4px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)]">
+                  <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style={{ background: `${s.accent}10` }} />
+                  <div className="relative z-10 flex-1">
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 shadow-sm"
                       style={{ background: `${s.accent}10`, border: `1px solid ${s.accent}20` }}>
-                      <s.icon size={24} style={{ color: s.accent }} />
+                      <s.icon size={28} style={{ color: s.accent }} />
                     </div>
-                    <div className="font-ui text-[12px] font-bold tracking-widest uppercase mb-4" style={{ color: s.accent }}>{s.tag}</div>
-                    <h3 className="font-display text-[1.4rem] sm:text-[1.6rem] leading-[1.2] mb-4 text-[#111]">{s.title}</h3>
-                    <p className="font-body text-[15px] sm:text-[16px] leading-[1.75] mb-8 text-stone-500 font-medium">{s.desc}</p>
-                    <ul className="flex flex-col gap-3.5 mt-auto">
+                    <div className="font-ui text-[13px] font-bold tracking-widest uppercase mb-4" style={{ color: s.accent }}>{s.tag}</div>
+                    <h3 className="font-display text-[2rem] sm:text-[2.5rem] leading-[1.1] mb-5 text-[#111]">{s.title}</h3>
+                    <p className="font-body text-[16px] sm:text-[17px] leading-[1.75] text-stone-500 font-medium max-w-md">{s.desc}</p>
+                  </div>
+                  <div className="relative z-10 flex-1 flex flex-col justify-center">
+                    <ul className="flex flex-col gap-4">
                       {s.features.map(f => (
-                        <li key={f} className="flex items-center gap-3 font-ui text-[13px] sm:text-[14px] font-medium text-stone-600">
-                          <CheckCircle size={15} style={{ color: s.accent, flexShrink: 0 }} />
+                        <li key={f} className="flex items-center gap-3.5 font-ui text-[15px] font-semibold text-stone-600">
+                          <CheckCircle size={18} style={{ color: s.accent, flexShrink: 0 }} />
                           {f}
                         </li>
                       ))}
@@ -581,7 +656,7 @@ export default function Home() {
       </section>
 
       {/* ── TIMELINE ──────────────────────────────────────────────────────── */}
-      <section id="timeline" className="py-20 sm:py-24 lg:py-36 bg-[#F7F6F3]">
+      <section id="timeline" ref={timelineRef} className="py-20 sm:py-24 lg:py-36 bg-[#F7F6F3]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12">
           <FadeIn><SectionBadge label="My journey" /></FadeIn>
           <div className="flex flex-col lg:flex-row lg:items-end gap-4 lg:gap-20 mb-16 sm:mb-20">
@@ -593,7 +668,12 @@ export default function Home() {
           </div>
 
           <div className="relative">
-            <div className="hidden lg:block absolute left-1/2 top-4 bottom-4 w-px -translate-x-1/2 bg-stone-200" />
+            <div className="hidden lg:block absolute left-1/2 top-4 bottom-4 w-[2px] -translate-x-1/2 bg-stone-200">
+              <motion.div 
+                className="w-full bg-[#FF5C28] origin-top"
+                style={{ scaleY: timelineScale, height: '100%' }}
+              />
+            </div>
             <div className="flex flex-col gap-10 sm:gap-16">
               {videoTimeline.map((item, i) => {
                 const isLeft = i % 2 === 0;
@@ -682,7 +762,7 @@ export default function Home() {
                 <div className="relative z-10 flex flex-col items-center text-center">
                   <div className="w-36 h-36 rounded-full flex items-center justify-center font-display text-[54px] font-bold text-white mb-6 shadow-2xl"
                     style={{ background: `linear-gradient(135deg, #FF5C28, #ff9a6c)`, boxShadow: `0 12px 40px rgba(255,92,40,0.3)` }}>
-                    SV
+                    SG
                   </div>
                   <h3 className="font-display text-[2.2rem] font-bold text-[#111] mb-2 tracking-tight">Sid Graphics</h3>
                   <p className="font-ui text-[14px] font-bold tracking-wide text-[#FF5C28] mb-8">PREMIUM GRAPHIC DESIGNER</p>
@@ -783,8 +863,8 @@ export default function Home() {
           <FadeIn delay={0.3}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-16 sm:mb-20">
               <TextRollBtn text="Contact on WhatsApp" href="https://wa.me/919876543210" variant="white" />
-              <a href="mailto:sharonraj@example.com" className="inline-flex items-center gap-2.5 font-ui text-[15px] font-bold text-white/80 hover:text-white transition-colors">
-                <Mail size={18} />sharonraj@example.com
+              <a href="mailto:sidgraphics@example.com" className="inline-flex items-center gap-2.5 font-ui text-[15px] font-bold text-white/80 hover:text-white transition-colors">
+                <Mail size={18} />sidgraphics@example.com
               </a>
             </div>
           </FadeIn>
@@ -806,11 +886,11 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-[#FF5C28] rounded-xl flex items-center justify-center">
-                <span className="text-white text-[13px] font-bold font-ui">SV</span>
+                <span className="text-white text-[13px] font-bold font-ui">SG</span>
               </div>
               <div>
                 <div className="font-ui text-[16px] font-bold text-white tracking-tight">Sid Graphics</div>
-                <div className="font-ui text-[12px] font-medium text-white/40 mt-0.5">Video Editor · Kamothe, Navi Mumbai</div>
+                <div className="font-ui text-[12px] font-medium text-white/40 mt-0.5">Graphic Designer · Kamothe, Navi Mumbai</div>
               </div>
             </div>
             <nav className="flex flex-wrap gap-x-8 gap-y-3">
@@ -834,7 +914,7 @@ export default function Home() {
               <div className="flex items-center justify-between mb-12">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-[#FF5C28] rounded-full flex items-center justify-center">
-                    <span className="text-white text-[12px] font-bold font-ui">SV</span>
+                    <span className="text-white text-[12px] font-bold font-ui">SG</span>
                   </div>
                   <a href="https://instagram.com/sid._.graphics" target="_blank" rel="noreferrer" className="text-sm font-medium hover:text-[#111]/70 transition-colors">Instagram</a>
                 </div>
@@ -861,6 +941,17 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ── FLOATING INSTAGRAM BUTTON ─────────────────────────────────────── */}
+      <a href="https://instagram.com/sid._.graphics" target="_blank" rel="noreferrer"
+         className="fixed bottom-6 right-6 z-[150] w-14 h-14 bg-gradient-to-tr from-[#FF5C28] to-[#ff9a6c] rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(255,92,40,0.4)] hover:scale-110 transition-transform duration-300 group">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+          <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+        </svg>
+        <div className="absolute inset-0 rounded-full border-2 border-white/40 scale-110 opacity-0 group-hover:animate-ping" />
+      </a>
     </div>
   );
 }
