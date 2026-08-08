@@ -405,6 +405,39 @@ export default function Home() {
             ))}
           </motion.div>
         </div>
+
+        {/* Scrolling image strip at the bottom */}
+        {(() => {
+          const HERO_IMAGES = [
+            "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&auto=format&fit=crop&q=60",
+            "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&auto=format&fit=crop&q=60",
+            "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&auto=format&fit=crop&q=60",
+            "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=60",
+            "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&auto=format&fit=crop&q=60",
+            "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&auto=format&fit=crop&q=60",
+            "https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&auto=format&fit=crop&q=60",
+            "https://images.unsplash.com/photo-1634942536790-6c1ccfa8e1c9?w=600&auto=format&fit=crop&q=60",
+          ];
+          const doubled = [...HERO_IMAGES, ...HERO_IMAGES];
+          return (
+            <div className="absolute bottom-0 left-0 w-full h-[36%] sm:h-[40%] pointer-events-none overflow-hidden"
+              style={{ maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 75%, transparent)' }}>
+              <motion.div
+                className="flex gap-4 h-full"
+                animate={{ x: ['0%', '-50%'] }}
+                transition={{ ease: 'linear', duration: 50, repeat: Infinity }}
+              >
+                {doubled.map((src, i) => (
+                  <div key={i} className="relative aspect-[3/4] h-full flex-shrink-0"
+                    style={{ rotate: `${i % 2 === 0 ? -2 : 2}deg` }}>
+                    <img src={src} alt={`Design work ${i + 1}`}
+                      className="w-full h-full object-cover rounded-2xl shadow-md opacity-80" />
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+          );
+        })()}
       </section>
 
       {/* ── Shader layer for hero (fallback gradient if shader fails) ──────── */}
