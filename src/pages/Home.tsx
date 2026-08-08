@@ -531,6 +531,78 @@ export default function Home() {
         </div>
       </section>
 
+      {/* STATIC DESIGNS */}
+      <section className="py-20 sm:py-24 lg:py-36 relative bg-white">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 sm:mb-16 lg:mb-20">
+            <div>
+              <FadeIn><SectionBadge label="Brand & Print" /></FadeIn>
+              <FadeIn delay={0.1}>
+                <h2 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] tracking-[-0.03em] max-w-lg text-[#111]">
+                  Visual identities that <span className="italic" style={{ background: 'linear-gradient(135deg,#FF5C28,#ff9a6c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>last.</span>
+                </h2>
+              </FadeIn>
+            </div>
+            <FadeIn delay={0.2}>
+              <p className="font-body text-[15px] sm:text-[16px] leading-[1.75] max-w-sm text-stone-500 font-medium">
+                From striking event posters to minimal logos. Clean, precise, and memorable.
+              </p>
+            </FadeIn>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {/* Large Hero Item */}
+            <FadeIn delay={0.1} className="md:col-span-2 md:row-span-2">
+              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
+                <img src="/assets/haldi-function-poster.jpeg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Haldi Function Poster" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-[#FF5C28] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Event Poster</span>
+                  <div className="text-white font-display text-2xl lg:text-3xl">Haldi Function Poster</div>
+                </div>
+              </div>
+            </FadeIn>
+            
+            {/* Small Item 1 */}
+            <FadeIn delay={0.2}>
+              <div className="relative rounded-3xl overflow-hidden aspect-square group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
+                <img src="/assets/baby-birthday-poster.jpeg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Baby Birthday Poster" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-[#a855f7] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Celebration</span>
+                  <div className="text-white font-display text-xl">Baby Birthday Poster</div>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Small Item 2 */}
+            <FadeIn delay={0.3}>
+              <div className="relative rounded-3xl overflow-hidden aspect-square group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
+                <img src="/assets/JCB-service-visiting-card.jpeg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="JCB Service Visiting Card" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-[#22d3ee] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Identity</span>
+                  <div className="text-white font-display text-xl">JCB Visiting Card</div>
+                </div>
+              </div>
+            </FadeIn>
+            
+            {/* Wide Item 3 */}
+            <FadeIn delay={0.4} className="md:col-span-3">
+              <div className="relative rounded-3xl overflow-hidden aspect-[21/9] md:aspect-[3/1] group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
+                <img src="/assets/property-pooja-poster.jpeg" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" alt="Property Pooja Poster" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-emerald-500 font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Real Estate</span>
+                  <div className="text-white font-display text-2xl lg:text-3xl">Property Pooja Poster</div>
+                </div>
+              </div>
+            </FadeIn>
+
+          </div>
+        </div>
+      </section>
+
       {/* TIMELINE */}
       <section id="timeline" ref={timelineRef} className="py-20 sm:py-24 lg:py-36 bg-[#F7F6F3]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12">
