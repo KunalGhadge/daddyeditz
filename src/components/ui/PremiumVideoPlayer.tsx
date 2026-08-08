@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { Play, Volume2, VolumeX } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PremiumVideoPlayerProps {
@@ -34,11 +34,17 @@ export function PremiumVideoPlayer({ src, poster, className, autoPlayHover = tru
     video.addEventListener('timeupdate', handleTimeUpdate);
     video.addEventListener('ended', handleEnded);
 
+    // Auto-play on mobile/initial load if possible, but muted
+    if (autoPlayHover && window.matchMedia('(hover: none)').matches) {
+        video.play().catch(() => {});
+        setIsPlaying(true);
+    }
+
     return () => {
       video.removeEventListener('timeupdate', handleTimeUpdate);
       video.removeEventListener('ended', handleEnded);
     };
-  }, []);
+  }, [autoPlayHover]);
 
   const togglePlay = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -95,10 +101,10 @@ export function PremiumVideoPlayer({ src, poster, className, autoPlayHover = tru
         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
       />
       
-      {/* Dark overlay that appears on hover for better control visibility */}
+      {/* Dark overlay that appears when paused for better control visibility */}
       <div className={cn(
-        "absolute inset-0 bg-black/40 transition-opacity duration-300 flex items-center justify-center",
-        isHovered && !isPlaying ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+        "absolute inset-0 bg-black/30 transition-opacity duration-300 flex items-center justify-center",
+        !isPlaying ? "opacity-100" : "opacity-0"
       )}>
         <AnimatePresence>
           {!isPlaying && (
@@ -114,10 +120,22 @@ export function PremiumVideoPlayer({ src, poster, className, autoPlayHover = tru
         </AnimatePresence>
       </div>
 
+      {/* Persistent Mute Button (so mobile users can unmute) */}
+      <button 
+        onClick={toggleMute}
+        className="absolute top-4 left-4 z-20 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md flex items-center justify-center transition-colors border border-white/10"
+      >
+        {isMuted ? (
+          <VolumeX className="w-4 h-4 text-white" />
+        ) : (
+          <Volume2 className="w-4 h-4 text-white" />
+        )}
+      </button>
+
       {/* Controls Container */}
       <div className={cn(
         "absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-300",
-        isHovered || !isPlaying ? "opacity-100" : "opacity-0"
+        isHovered || !isPlaying ? "opacity-100" : "opacity-0 sm:opacity-0 opacity-100" // always show gradient on mobile for text visibility
       )}>
         {/* Progress bar */}
         <div className="absolute top-0 inset-x-4 h-1 bg-white/30 rounded-full overflow-hidden">
@@ -125,30 +143,6 @@ export function PremiumVideoPlayer({ src, poster, className, autoPlayHover = tru
             className="h-full bg-[#FF5C28] transition-all duration-100 ease-linear"
             style={{ width: `${progress}%` }}
           />
-        </div>
-        
-        <div className="flex items-center justify-between mt-3">
-          <button 
-            onClick={togglePlay}
-            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center transition-colors"
-          >
-            {isPlaying ? (
-              <Pause className="w-4 h-4 text-white" fill="currentColor" />
-            ) : (
-              <Play className="w-4 h-4 text-white ml-0.5" fill="currentColor" />
-            )}
-          </button>
-          
-          <button 
-            onClick={toggleMute}
-            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center transition-colors"
-          >
-            {isMuted ? (
-              <VolumeX className="w-4 h-4 text-white" />
-            ) : (
-              <Volume2 className="w-4 h-4 text-white" />
-            )}
-          </button>
         </div>
       </div>
       {children}

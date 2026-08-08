@@ -7,10 +7,10 @@ import {
 import {
   Clock, Menu, X, ArrowRight, MapPin,
   Mail, Phone, Zap, Film,
-  CheckCircle, Sparkles, Smartphone, PlayCircle, MonitorPlay
+  CheckCircle, Sparkles
 } from 'lucide-react';
 import { Shader, ChromaFlow, FilmGrain, FlutedGlass, Swirl } from 'shaders/react';
-import TestimonialMarqueeDemo from '@/components/ui/marquee-01';
+
 import { PremiumVideoPlayer } from '@/components/ui/PremiumVideoPlayer';
 
 // ─── Live Clock ──────────────────────────────────────────────────────────────
@@ -146,40 +146,39 @@ function ReactionButton() {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [liked, setLiked] = useState(false);
   const idRef = useRef(0);
-  const EMOJIS = ['❤️', '🔥'];
 
-  const burst = () => {
+  const burst = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setLiked(true);
-    const newParticles: Particle[] = Array.from({ length: 8 }, () => {
+    const newParticles: Particle[] = Array.from({ length: 6 }, () => {
       idRef.current += 1;
       return {
         id: idRef.current,
-        emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
-        x: (Math.random() - 0.5) * 70,
-        rotate: (Math.random() - 0.5) * 40,
+        emoji: '',
+        x: (Math.random() - 0.5) * 60,
+        rotate: (Math.random() - 0.5) * 60,
       };
     });
     setParticles(prev => [...prev, ...newParticles]);
     setTimeout(() => {
       setParticles(prev => prev.filter(p => !newParticles.find(np => np.id === p.id)));
-    }, 1000);
+    }, 800);
   };
 
   return (
-    <div className="relative flex items-center justify-center">
-      {/* Confetti particles */}
+    <div className="relative flex items-center justify-center pointer-events-auto">
+      {/* Spark particles */}
       <AnimatePresence>
         {particles.map(p => (
-          <motion.span
+          <motion.div
             key={p.id}
-            className="absolute text-[18px] pointer-events-none select-none"
-            initial={{ y: 0, x: p.x * 0.2, opacity: 1, scale: 0.6, rotate: 0 }}
-            animate={{ y: -70, x: p.x, opacity: 0, scale: 1.3, rotate: p.rotate }}
+            className="absolute w-2 h-2 rounded-full pointer-events-none"
+            style={{ background: 'linear-gradient(135deg,#FF5C28,#ff9a6c)' }}
+            initial={{ y: 0, x: p.x * 0.2, opacity: 1, scale: 0.5 }}
+            animate={{ y: -50 - Math.random() * 20, x: p.x, opacity: 0, scale: 1.5 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {p.emoji}
-          </motion.span>
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          />
         ))}
       </AnimatePresence>
 
@@ -210,11 +209,7 @@ const videoTimeline = [
   { year: '2026', tag: 'Current Era', title: 'Master of Short-Form', desc: "Exclusively helping businesses and creators dominate Instagram and TikTok through high-converting, cinematic short-form video content.", skills: ['Brand Building', 'Viral Formulas', 'DaVinci Resolve'], color: '#22d3ee' },
 ];
 
-const services = [
-  { icon: PlayCircle, tag: 'Reels & TikToks', title: 'High-Retention Short Form', desc: 'Fast-paced, hook-driven edits designed specifically for the algorithms. Perfect for Instagram Reels, TikTok, and YouTube Shorts.', features: ['Dynamic Captions', 'B-Roll Sourcing', 'Sound Effects & Music', 'Motion Graphics', 'Color Grading'], accent: '#FF5C28', border: 'rgba(255,92,40,0.15)', bg: 'rgba(255,92,40,0.04)' },
-  { icon: MonitorPlay, tag: 'Long Form', title: 'YouTube & Podcasts', desc: 'Engaging, story-driven edits for long-form content. Keeping viewers hooked from intro to outro without losing momentum.', features: ['Multi-Cam Editing', 'Story Pacing', 'Audio Cleaning', 'Lower Thirds', 'A-Roll / B-Roll Cuts'], accent: '#a855f7', border: 'rgba(168,85,247,0.15)', bg: 'rgba(168,85,247,0.04)' },
-  { icon: Smartphone, tag: 'Content Retainer', title: 'Monthly Video Partner', desc: 'A dedicated editing partnership. You film, I handle the rest. Consistent, high-quality content delivered on autopilot every month.', features: ['Guaranteed Turnarounds', 'Unlimited Revisions', 'Trend Research', 'Priority Support', 'Cloud Storage'], accent: '#22d3ee', border: 'rgba(34,211,238,0.15)', bg: 'rgba(34,211,238,0.04)' },
-];
+
 
 const portfolioItems = [
   {
@@ -223,7 +218,6 @@ const portfolioItems = [
     client: "Navi Mumbai Festival",
     metrics: "+40% Engagement",
     video: "/assets/v11.mp4",
-    poster: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=600&auto=format&fit=crop",
     color: "from-blue-500/20",
     link: "/services/event-branding",
   },
@@ -232,8 +226,7 @@ const portfolioItems = [
     title: "Logo Design",
     client: "Tech Startup",
     metrics: "Brand Identity",
-    video: "/assets/v11.mp4",
-    poster: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop",
+    video: "/assets/v22.mp4",
     color: "from-purple-500/20",
     link: "/services/logo-design-navi-mumbai",
   },
@@ -242,8 +235,7 @@ const portfolioItems = [
     title: "Social Media Posts",
     client: "Fitness Coach",
     metrics: "1M+ Impressions",
-    video: "/assets/v11.mp4",
-    poster: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop",
+    video: "/assets/v33.mp4",
     color: "from-emerald-500/20",
     link: "/services/social-media-kamothe",
   },
@@ -253,7 +245,6 @@ const portfolioItems = [
     client: "E-commerce Brand",
     metrics: "3x Sales Boost",
     video: "/assets/v11.mp4",
-    poster: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop",
     color: "from-orange-500/20",
     link: "/services/product-marketing",
   }
@@ -285,7 +276,9 @@ export default function Home() {
   const { scrollYProgress: workScroll } = useScroll({
     target: workRef,
   });
-  const workX = useTransform(workScroll, [0, 1], ["0%", "-75%"]);
+  const workX = useTransform(workScroll, [0, 1], ["0%", "-40%"]);
+  // Reset desktop scroll mapping on mobile
+  if (typeof window !== "undefined" && window.innerWidth < 1024) { workX.set("0%"); }
 
   const theme = {
     bg: '#F7F6F3', bgAlt: '#FFFFFF', bgCard: 'rgba(255,255,255,0.7)',
@@ -470,8 +463,8 @@ export default function Home() {
       <TextMarquee />
 
       {/* ── 9:16 SHORT FORM WORK ───────────────────────────────────────────── */}
-      <section id="work" ref={workRef} className="relative bg-[#111] h-[300vh]">
-        <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+      <section id="work" ref={workRef} className="relative bg-[#111] lg:h-[200vh]">
+        <div className="lg:sticky top-0 lg:h-screen flex flex-col justify-center overflow-hidden py-20 lg:py-0">
           <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 w-full mb-8 sm:mb-12">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
               <div>
@@ -487,40 +480,40 @@ export default function Home() {
                   </h2>
                 </FadeIn>
               </div>
-              <FadeIn delay={0.2}>
+              <FadeIn delay={0.2} className="flex flex-col gap-2">
                 <p className="font-body text-[15px] sm:text-[16px] leading-[1.75] max-w-sm text-stone-400 font-medium">
-                  Vertical content requires a completely different pacing. Scroll down to browse horizontally.
+                  Vertical content requires a completely different pacing. Swipe to browse.
+                </p>
+                <p className="font-body text-[12px] opacity-40 text-white">
+                  * Video quality may adapt to your network connection.
                 </p>
               </FadeIn>
             </div>
           </div>
 
-          <motion.div style={{ x: workX }} className="flex gap-5 sm:gap-6 px-4 sm:px-8 lg:px-12 w-[300vw] sm:w-[200vw] lg:w-[130vw]">
+          <motion.div 
+            style={{ x: workX }} 
+            className="flex gap-4 sm:gap-6 px-4 sm:px-8 lg:px-12 w-full lg:w-max overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory pb-8 lg:pb-0 scrollbar-hide"
+          >
             {portfolioItems.map((item) => (
-              <div key={item.id} className="group cursor-pointer flex flex-col h-[50vh] sm:h-[60vh] w-[70vw] sm:w-[35vw] lg:w-[25vw] shrink-0 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.8)] transition-shadow duration-500">
+              <div key={item.id} className="group cursor-pointer flex flex-col h-[60vh] lg:h-[65vh] w-[85vw] sm:w-[45vw] lg:w-[25vw] shrink-0 snap-center rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.8)] transition-shadow duration-500">
                 <PremiumVideoPlayer 
                   src={item.video} 
-                  poster={item.poster}
                   className="relative w-full h-full bg-stone-900"
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none" />
 
                   {/* Type badge */}
-                  <div className="absolute top-4 left-4 pointer-events-auto">
+                  <div className="absolute top-4 right-4 pointer-events-auto hidden lg:block">
                     <span className="text-white text-[11px] font-bold font-ui px-2.5 py-1.5 rounded-lg"
                       style={{ background: 'rgba(255,92,40,0.9)', backdropFilter: 'blur(4px)', boxShadow: '0 4px 12px rgba(255,92,40,0.3)' }}>
                       {item.metrics}
                     </span>
                   </div>
 
-                  {/* Reaction button — top right */}
-                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-auto">
-                    <ReactionButton />
-                  </div>
-
                   {/* Title & views */}
                   <div className="absolute bottom-5 left-5 right-5 pointer-events-none">
-                    <div className="font-display text-[1.4rem] sm:text-[1.8rem] text-white font-medium mb-2 leading-tight">{item.title}</div>
+                    <div className="font-display text-[1.4rem] sm:text-[1.8rem] text-white font-medium mb-3 leading-tight">{item.title}</div>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5 font-ui text-[13px] font-bold text-white/80">
                         <Film size={15} className="text-[#FF5C28]" />
@@ -537,125 +530,8 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-      {/* ── STATIC DESIGNS (POSTERS/LOGOS) ─────────────────────────────────── */}
-      <section className="py-20 sm:py-24 lg:py-36 relative bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 sm:mb-16 lg:mb-20">
-            <div>
-              <FadeIn><SectionBadge label="Brand & Print" /></FadeIn>
-              <FadeIn delay={0.1}>
-                <h2 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] tracking-[-0.03em] max-w-lg text-[#111]">
-                  Visual identities that <span className="italic" style={{ background: 'linear-gradient(135deg,#FF5C28,#ff9a6c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>last.</span>
-                </h2>
-              </FadeIn>
-            </div>
-            <FadeIn delay={0.2}>
-              <p className="font-body text-[15px] sm:text-[16px] leading-[1.75] max-w-sm text-stone-500 font-medium">
-                From striking event posters to minimal logos. Clean, precise, and memorable.
-              </p>
-            </FadeIn>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            {/* Large Hero Item */}
-            <FadeIn delay={0.1} className="md:col-span-2 md:row-span-2">
-              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
-                <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1200&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Brand Identity" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <span className="text-[#FF5C28] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Brand Identity</span>
-                  <div className="text-white font-display text-2xl">Modern Tech Logo</div>
-                </div>
-              </div>
-            </FadeIn>
-            
-            {/* Small Item 1 */}
-            <FadeIn delay={0.2}>
-              <div className="relative rounded-3xl overflow-hidden aspect-square group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
-                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=600&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Poster" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <span className="text-[#a855f7] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Event Poster</span>
-                  <div className="text-white font-display text-xl">Navi Mumbai Fest</div>
-                </div>
-              </div>
-            </FadeIn>
-
-            {/* Small Item 2 */}
-            <FadeIn delay={0.3}>
-              <div className="relative rounded-3xl overflow-hidden aspect-square group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-100 border border-black/5">
-                <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Social Media" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-6 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <span className="text-[#22d3ee] font-ui text-[12px] font-bold uppercase tracking-wider bg-white/90 px-3 py-1 rounded-full mb-2 inline-block">Social Media</span>
-                  <div className="text-white font-display text-xl">Fitness Campaign</div>
-                </div>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SERVICES ──────────────────────────────────────────────────────── */}
-      <section id="services" className="py-20 sm:py-24 lg:py-36 relative bg-[#fdfbf7]">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none bg-[#FF5C28]/5 blur-[150px]" />
-        <div className="max-w-[1000px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
-          <FadeIn><SectionBadge label="What I do" /></FadeIn>
-          <div className="flex flex-col lg:flex-row lg:items-end gap-6 lg:gap-20 mb-12 sm:mb-16 lg:mb-20">
-            <FadeIn delay={0.1} className="flex-1">
-              <h2 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] tracking-[-0.03em] text-[#111]">
-                Designs that <span className="italic text-stone-400">demand attention.</span>
-              </h2>
-            </FadeIn>
-          </div>
-
-          <div className="flex flex-col gap-6 relative">
-            {services.map((s, i) => (
-              <FadeIn key={s.tag} delay={0.1} className="sticky" style={{ top: `calc(10vh + ${i * 40}px)` }}>
-                <div className="relative rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row gap-10 overflow-hidden group transition-all duration-500 bg-white border border-black/[0.04] shadow-[0_4px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)]">
-                  <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style={{ background: `${s.accent}10` }} />
-                  <div className="relative z-10 flex-1">
-                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 shadow-sm"
-                      style={{ background: `${s.accent}10`, border: `1px solid ${s.accent}20` }}>
-                      <s.icon size={28} style={{ color: s.accent }} />
-                    </div>
-                    <div className="font-ui text-[13px] font-bold tracking-widest uppercase mb-4" style={{ color: s.accent }}>{s.tag}</div>
-                    <h3 className="font-display text-[2rem] sm:text-[2.5rem] leading-[1.1] mb-5 text-[#111]">{s.title}</h3>
-                    <p className="font-body text-[16px] sm:text-[17px] leading-[1.75] text-stone-500 font-medium max-w-md">{s.desc}</p>
-                  </div>
-                  <div className="relative z-10 flex-1 flex flex-col justify-center">
-                    <ul className="flex flex-col gap-4">
-                      {s.features.map(f => (
-                        <li key={f} className="flex items-center gap-3.5 font-ui text-[15px] font-semibold text-stone-600">
-                          <CheckCircle size={18} style={{ color: s.accent, flexShrink: 0 }} />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── TESTIMONIALS ──────────────────────────────────────────────────── */}
-      <section className="py-20 sm:py-24 lg:py-32 bg-white overflow-hidden">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 mb-12 sm:mb-16">
-          <FadeIn><SectionBadge label="What clients say" /></FadeIn>
-          <FadeIn delay={0.1}>
-            <h2 className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] tracking-[-0.03em] text-[#111] max-w-2xl">
-              Real results. <span className="italic text-stone-400">Real clients.</span>
-            </h2>
-          </FadeIn>
-        </div>
-        <FadeIn delay={0.15}>
-          <TestimonialMarqueeDemo />
-        </FadeIn>
-      </section>
-
-      {/* ── TIMELINE ──────────────────────────────────────────────────────── */}
+      {/* TIMELINE */}
       <section id="timeline" ref={timelineRef} className="py-20 sm:py-24 lg:py-36 bg-[#F7F6F3]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12">
           <FadeIn><SectionBadge label="My journey" /></FadeIn>
