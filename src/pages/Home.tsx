@@ -10,7 +10,6 @@ import {
   CheckCircle, Sparkles, Smartphone, PlayCircle, MonitorPlay
 } from 'lucide-react';
 import { Shader, ChromaFlow, FilmGrain, FlutedGlass, Swirl } from 'shaders/react';
-import { AnimatedMarqueeHero } from '@/components/ui/hero-3';
 import TestimonialMarqueeDemo from '@/components/ui/marquee-01';
 
 // ─── Live Clock ──────────────────────────────────────────────────────────────
@@ -266,17 +265,6 @@ const process = [
   { n: '04', title: 'Review & Delivery', desc: 'You review the draft. I make any needed tweaks, and deliver the final high-res file ready to post.', icon: CheckCircle },
 ];
 
-// Hero images for the animated marquee
-const HERO_IMAGES = [
-  "https://images.unsplash.com/photo-1756312148347-611b60723c7a?w=900&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1757865579201-693dd2080c73?w=900&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1756786605218-28f7dd95a493?w=900&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1757519740947-eef07a74c4ab?w=900&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1757263005786-43d955f07fb1?w=900&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1757207445614-d1e12b8f753e?w=900&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1757269746970-dc477517268f?w=900&auto=format&fit=crop&q=60",
-  "https://images.unsplash.com/photo-1755119902709-a53513bcbedc?w=900&auto=format&fit=crop&q=60",
-];
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function Home() {
@@ -310,8 +298,7 @@ export default function Home() {
               <span className="text-white text-[12px] font-bold font-ui">SV</span>
             </div>
             <div>
-              <div className="text-xl font-bold tracking-tight">Sid Graphics</div>
-              <div className="font-ui text-[11px] font-medium mt-1 text-stone-500 hidden sm:block">Video Editor · Kamothe</div>
+              <div className="text-[15px] font-bold tracking-tight" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Sid Graphics</div>
             </div>
           </a>
 
@@ -340,15 +327,85 @@ export default function Home() {
         </nav>
       </div>
 
-      {/* ── HERO (AnimatedMarqueeHero) ─────────────────────────────────────── */}
-      <AnimatedMarqueeHero
-        tagline="Business Growth Designs • Logo • Social Media Posts"
-        title={<>Premium Graphic Design<br />For Brands that Scale.</>}
-        description="Specializing in high-retention Reels, TikToks, and Shorts. I help brands capture attention in the first 3 seconds and turn views into real results."
-        ctaText="Let's work together"
-        ctaHref="#contact"
-        images={HERO_IMAGES}
-      />
+      {/* ── HERO ───────────────────────────────────────────────────────────── */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-8 overflow-hidden" style={{ background: '#F7F6F3' }}>
+        {/* Subtle background gradient blob */}
+        <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(255,92,40,0.08) 0%, transparent 70%)' }} />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[40vw] h-[40vw] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(255,92,40,0.05) 0%, transparent 70%)' }} />
+
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          {/* Eyebrow badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border"
+            style={{ background: 'rgba(255,92,40,0.06)', borderColor: 'rgba(255,92,40,0.15)' }}
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF5C28] animate-pulse" />
+            <span className="text-[12px] font-bold tracking-wider text-[#FF5C28] uppercase" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Kamothe, Navi Mumbai</span>
+          </motion.div>
+
+          {/* Main headline — mixed fonts */}
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mb-6 leading-[1.05] tracking-[-0.03em]"
+            style={{ fontSize: 'clamp(2.8rem, 8vw, 6rem)' }}
+          >
+            <span style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, color: '#111' }}>Designs that</span>
+            {' '}
+            <span style={{ fontFamily: 'Playfair Display, serif', fontStyle: 'italic', fontWeight: 700, color: '#FF5C28' }}>grow</span>
+            <br />
+            <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontWeight: 600, color: '#111' }}>your </span>
+            <span style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, color: '#111' }}>business.</span>
+          </motion.h1>
+
+          {/* Subtext — short and clean */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-md mx-auto mb-10 text-stone-500 leading-relaxed"
+            style={{ fontSize: 'clamp(1rem, 2vw, 1.125rem)', fontFamily: 'Inter, sans-serif', fontWeight: 400 }}
+          >
+            Logo design, social media posts &amp; brand identity — for businesses in Navi Mumbai ready to stand out.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap gap-4 items-center justify-center"
+          >
+            <a href="#contact" className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-white font-bold text-[15px] transition-transform hover:scale-105"
+              style={{ background: '#FF5C28', boxShadow: '0 8px 30px rgba(255,92,40,0.35)', fontFamily: 'Space Grotesk, sans-serif' }}>
+              Work with me <ArrowRight size={16} />
+            </a>
+            <a href="#work" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-[15px] border transition-all hover:bg-stone-100"
+              style={{ color: '#111', borderColor: 'rgba(0,0,0,0.12)', fontFamily: 'Space Grotesk, sans-serif' }}>
+              See my work
+            </a>
+          </motion.div>
+
+          {/* Service pills */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className="flex flex-wrap items-center justify-center gap-2.5 mt-12"
+          >
+            {['Logo Design', 'Social Media Posts', 'Event Posters', 'Brand Identity'].map(s => (
+              <span key={s} className="px-3.5 py-1.5 rounded-full text-[12px] font-semibold border"
+                style={{ fontFamily: 'Space Grotesk, sans-serif', background: 'rgba(255,255,255,0.8)', borderColor: 'rgba(0,0,0,0.08)', color: '#555' }}>
+                {s}
+              </span>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
       {/* ── Shader layer for hero (fallback gradient if shader fails) ──────── */}
       {!shaderFailed && (
