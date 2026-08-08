@@ -261,6 +261,13 @@ const process = [
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
   const [menuOpen, setMenuOpen] = useState(false);
   const [shaderFailed, setShaderFailed] = useState(false);
   const handleShaderUnavailable = useCallback((_r: string) => setShaderFailed(true), []);
@@ -278,8 +285,7 @@ export default function Home() {
     target: workRef,
   });
   const workX = useTransform(workScroll, [0, 1], ["0%", "-40%"]);
-  // Reset desktop scroll mapping on mobile
-  if (typeof window !== "undefined" && window.innerWidth < 1024) { workX.set("0%"); }
+
 
   const theme = {
     bg: '#F7F6F3', bgAlt: '#FFFFFF', bgCard: 'rgba(255,255,255,0.7)',
@@ -493,7 +499,7 @@ export default function Home() {
           </div>
 
           <motion.div 
-            style={{ x: workX }} 
+            style={{ x: isMobile ? "0%" : workX }} 
             className="flex gap-4 sm:gap-6 px-4 sm:px-8 lg:px-12 w-full lg:w-max overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory pb-8 lg:pb-0 scrollbar-hide"
           >
             {portfolioItems.map((item) => (
