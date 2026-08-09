@@ -399,7 +399,7 @@ export default function Home() {
               style={{ background: '#FF5C28', boxShadow: '0 8px 30px rgba(255,92,40,0.35)', fontFamily: 'Space Grotesk, sans-serif' }}>
               Work with me <ArrowRight size={16} />
             </a>
-            <a href="#work" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-[15px] border transition-all hover:bg-stone-100"
+            <a href="#posters" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-[15px] border transition-all hover:bg-stone-100"
               style={{ color: '#111', borderColor: 'rgba(0,0,0,0.12)', fontFamily: 'Space Grotesk, sans-serif' }}>
               See my work
             </a>
@@ -539,7 +539,7 @@ export default function Home() {
       </section>
 
       {/* STATIC DESIGNS */}
-      <section className="py-20 sm:py-24 lg:py-36 relative bg-white">
+      <section id="posters" className="py-20 sm:py-24 lg:py-36 relative bg-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 sm:mb-16 lg:mb-20">
             <div>
@@ -836,14 +836,14 @@ export default function Home() {
           <FadeIn delay={0.3}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-16 sm:mb-20">
               <TextRollBtn text="Contact on WhatsApp" href="https://wa.me/918108422924?text=Hi%20Sid%20Graphics!%20I%20would%20like%20to%20make%20an%20enquiry%20about%20your%20services." variant="white" />
-              <a href="mailto:sidgraphics@example.com" className="inline-flex items-center gap-2.5 font-ui text-[15px] font-bold text-white/80 hover:text-white transition-colors">
-                <Mail size={18} />sidgraphics@example.com
+              <a href="mailto:Sideditz1630@gmail.com" className="inline-flex items-center gap-2.5 font-ui text-[15px] font-bold text-white/80 hover:text-white transition-colors">
+                <Mail size={18} />Sideditz1630@gmail.com
               </a>
             </div>
           </FadeIn>
           <FadeIn delay={0.4}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 pt-10 sm:pt-12 border-t border-white/20">
-              {[{ icon: MapPin, label: 'Kamothe, Navi Mumbai — 410209' }, { icon: Mail, label: 'sidgraphics@example.com' }, { icon: Phone, label: '+91 81084 22924' }].map(({ icon: Icon, label }) => (
+              {[{ icon: MapPin, label: 'Kamothe, Navi Mumbai — 410209' }, { icon: Mail, label: 'Sideditz1630@gmail.com' }, { icon: Phone, label: '+91 81084 22924' }].map(({ icon: Icon, label }) => (
                 <div key={label} className="flex items-center gap-3 font-ui text-[14px] font-semibold text-white/70">
                   <Icon size={16} className="text-white/50 shrink-0" />{label}
                 </div>
