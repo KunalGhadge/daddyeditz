@@ -640,7 +640,7 @@ export default function Home() {
           </div>
 
           <div className="relative">
-            <div className="hidden lg:block absolute left-1/2 top-4 bottom-4 w-[2px] -translate-x-1/2 bg-stone-200">
+            <div className="hidden lg:block absolute left-1/2 top-4 bottom-4 w-[2px] -translate-x-1/2 bg-stone-200 z-0">
               <motion.div 
                 className="w-full bg-[#FF5C28] origin-top"
                 style={{ scaleY: timelineScale, height: '100%' }}
@@ -691,12 +691,13 @@ export default function Home() {
                         </div>
                       ) : <div />}
 
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="w-16 h-16 rounded-2xl flex items-center justify-center font-ui text-[15px] font-bold shrink-0"
-                          style={{ background: `${item.color}15`, border: `1px solid ${item.color}30`, color: item.color, boxShadow: `0 8px 24px ${item.color}20` }}>
-                          '{item.year.slice(2)}
+                      <div className="flex flex-col items-center gap-3 relative z-10">
+                        <div className="relative z-10 bg-[#F7F6F3] rounded-2xl">
+                          <div className="w-16 h-16 rounded-2xl flex items-center justify-center font-ui text-[15px] font-bold shrink-0"
+                            style={{ background: `${item.color}15`, border: `1px solid ${item.color}30`, color: item.color, boxShadow: `0 8px 24px ${item.color}20` }}>
+                            '{item.year.slice(2)}
+                          </div>
                         </div>
-                        {i < 3 && <div className="w-px bg-stone-200" style={{ height: 60 }} />}
                       </div>
 
                       {!isLeft ? (
