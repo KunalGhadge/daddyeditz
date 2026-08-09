@@ -44,10 +44,10 @@ export default function Navbar() {
           </div>
 
           <div className="hidden items-center gap-5 md:flex">
-            <span className="hidden text-[13px] text-gray-600 lg:block">
+            <span className="hidden whitespace-nowrap text-[13px] text-gray-600 lg:block">
               Taking on projects for Q1 2026
             </span>
-            <span className="flex items-center gap-1.5 text-[13px] text-gray-600">
+            <span className="flex items-center gap-1.5 whitespace-nowrap text-[13px] text-gray-600">
               <Clock size={14} />
               {time} in London
             </span>
