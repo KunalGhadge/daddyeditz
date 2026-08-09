@@ -835,7 +835,7 @@ export default function Home() {
           </FadeIn>
           <FadeIn delay={0.3}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-16 sm:mb-20">
-              <TextRollBtn text="Contact on WhatsApp" href="https://wa.me/919876543210" variant="white" />
+              <TextRollBtn text="Contact on WhatsApp" href="https://wa.me/918108422924?text=Hi%20Sid%20Graphics!%20I%20would%20like%20to%20make%20an%20enquiry%20about%20your%20services." variant="white" />
               <a href="mailto:sidgraphics@example.com" className="inline-flex items-center gap-2.5 font-ui text-[15px] font-bold text-white/80 hover:text-white transition-colors">
                 <Mail size={18} />sidgraphics@example.com
               </a>
@@ -843,7 +843,7 @@ export default function Home() {
           </FadeIn>
           <FadeIn delay={0.4}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 pt-10 sm:pt-12 border-t border-white/20">
-              {[{ icon: MapPin, label: 'Kamothe, Navi Mumbai — 410209' }, { icon: Mail, label: 'sidgraphics@example.com' }, { icon: Phone, label: '+91 98765 43210' }].map(({ icon: Icon, label }) => (
+              {[{ icon: MapPin, label: 'Kamothe, Navi Mumbai — 410209' }, { icon: Mail, label: 'sidgraphics@example.com' }, { icon: Phone, label: '+91 81084 22924' }].map(({ icon: Icon, label }) => (
                 <div key={label} className="flex items-center gap-3 font-ui text-[14px] font-semibold text-white/70">
                   <Icon size={16} className="text-white/50 shrink-0" />{label}
                 </div>
